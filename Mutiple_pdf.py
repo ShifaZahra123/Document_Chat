@@ -30,9 +30,9 @@ def get_text_chunks(text):   # Text Convert into Smaller chunks of size 10000
 
 
 def get_vector_store(text_chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
-    vector_store.save_local("faiss_index") # Storing Database in Local Environment
+    return vector_store
 
 
 def get_conversational_chain():
@@ -56,33 +56,24 @@ def get_conversational_chain():
 
 
 
-def user_input(user_question): # text box functionality
-    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
-    
-    new_db = FAISS.load_local("faiss_index", embeddings)
-    docs = new_db.similarity_search(user_question)
-
+def user_input(user_question, vector_store):  # Now taking vector_store as input
+    docs = vector_store.similarity_search(user_question)
     chain = get_conversational_chain()
-
-    
-    response = chain(
-        {"input_documents":docs, "question": user_question}
-        , return_only_outputs=True)
-
-    print(response)
+    response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
     st.write("Reply: ", response["output_text"])
-
-
 
 
 def main():
     st.set_page_config("Chat with Multiple PDF")
     st.header("Chat with PDF💁")
+    
+    if 'vector_store' not in st.session_state:  # Keep vector_store in session state
+        st.session_state['vector_store'] = None
 
     user_question = st.text_input("Ask a Question from the PDF Files")
 
-    if user_question:
-        user_input(user_question)
+    if user_question and st.session_state['vector_store']:
+        user_input(user_question, st.session_state['vector_store'])
 
     with st.sidebar:
         st.title("Menu:")
@@ -91,10 +82,8 @@ def main():
             with st.spinner("Processing..."):
                 raw_text = get_pdf_text(pdf_docs)
                 text_chunks = get_text_chunks(raw_text)
-                get_vector_store(text_chunks)
+                st.session_state['vector_store'] = get_vector_store(text_chunks)
                 st.success("Done")
-
-
 
 if __name__ == "__main__":
     main()
