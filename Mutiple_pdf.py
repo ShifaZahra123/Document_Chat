@@ -1,12 +1,12 @@
 import streamlit as st
 from PyPDF2 import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter # Convert text into Chunks
 import os
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings # Provide Embeddings by Google by using Google API Keys, Vector Embedding Technique (Convert Chunks of Text to Vectors)
 import google.generativeai as genai
-from langchain.vectorstores import FAISS
+from langchain.vectorstores import FAISS  # Vector store DB created by Facebook doing Similarity Search
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.chains.question_answering import load_qa_chain
+from langchain.chains.question_answering import load_qa_chain # For chat with documnets
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 
