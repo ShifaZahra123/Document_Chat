@@ -5,4 +5,5 @@ langchain # To read pdf, it has lot of funtionalities to read pdf
 PyPDF2  # To read pdf
 chromadb
 faiss-cpu  # GPU is using because number of files are small
+langchain_community
 langchain_google_genai # With help of langachin, i can access google generative api's
