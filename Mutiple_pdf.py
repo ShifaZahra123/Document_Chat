@@ -30,7 +30,7 @@ def get_text_chunks(text):   # Text Convert into Smaller chunks of size 10000
 
 
 def get_vector_store(text_chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     return vector_store
 
