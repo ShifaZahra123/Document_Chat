@@ -1,6 +1,6 @@
 import streamlit as st
 from PyPDF2 import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter # Convert text into Chunks
+from langchain_text_splitters import RecursiveCharacterTextSplitter # Convert text into Chunks
 import os
 from langchain_google_genai import GoogleGenerativeAIEmbeddings # Provide Embeddings by Google by using Google API Keys, Vector Embedding Technique (Convert Chunks of Text to Vectors)
 import google.generativeai as genai
