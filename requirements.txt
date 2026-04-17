@@ -9,3 +9,4 @@ langchain-core==0.1.52
 langchain-community==0.0.38
 langchain-text-splitters
 langchain-google-genai  # With help of langachin, i can access google generative api's
+google-genai
