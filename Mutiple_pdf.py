@@ -6,8 +6,8 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings # Provide Embedd
 import google.generativeai as genai
 from langchain_community.vectorstores import FAISS  # Vector store DB created by Facebook doing Similarity Search
 from langchain_google_genai import ChatGoogleGenerativeAI  # For chat with documnets
-from langchain.chains.question_answering import load_qa_chain # For chat with documnets
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -50,17 +50,52 @@ def get_conversational_chain():
                              temperature=0.3)
 
     prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"]) # langchain function PromptTemplate()
-    chain = load_qa_chain(model, chain_type="stuff", prompt=prompt) # For internal text summarization: chain_type="stuff"
+    def get_conversational_chain():
+
+    prompt_template = """
+    Answer the question as detailed as possible from the provided context.
+    If the answer is not in the provided context, say:
+    "answer is not available in the context"
+
+    Context:
+    {context}
+
+    Question:
+    {input}
+
+    Answer:
+    """
+
+    model = ChatGoogleGenerativeAI(
+        model="gemini-pro",
+        temperature=0.3
+    )
+
+    prompt = ChatPromptTemplate.from_template(prompt_template)
+
+    chain = create_stuff_documents_chain(model, prompt)
+
+    return chain
 
     return chain
 
 
 
-def user_input(user_question, vector_store):  # Now taking vector_store as input
-    docs = vector_store.similarity_search(user_question)
-    chain = get_conversational_chain()
-    response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
-    st.write("Reply: ", response["output_text"])
+from langchain.chains import create_retrieval_chain
+
+def user_input(user_question, vector_store):
+
+    retriever = vector_store.as_retriever()
+
+    document_chain = get_conversational_chain()
+
+    retrieval_chain = create_retrieval_chain(retriever, document_chain)
+
+    response = retrieval_chain.invoke({
+        "input": user_question
+    })
+
+    st.write("Reply:", response["answer"])
 
 
 def main():
