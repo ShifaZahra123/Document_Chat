@@ -3,7 +3,7 @@ from PyPDF2 import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter # Convert text into Chunks
 import os
 from langchain_google_genai import GoogleGenerativeAIEmbeddings # Provide Embeddings by Google by using Google API Keys, Vector Embedding Technique (Convert Chunks of Text to Vectors)
-import google.generativeai as genai
+from google import genai
 from langchain_community.vectorstores import FAISS  # Vector store DB created by Facebook doing Similarity Search
 from langchain_google_genai import ChatGoogleGenerativeAI  # For chat with documnets
 from langchain_core.prompts import ChatPromptTemplate
@@ -30,7 +30,7 @@ def get_text_chunks(text):   # Text Convert into Smaller chunks of size 10000
 
 
 def get_vector_store(text_chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     return vector_store
 
