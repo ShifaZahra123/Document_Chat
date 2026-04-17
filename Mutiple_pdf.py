@@ -50,11 +50,11 @@ def get_conversational_chain():
                              temperature=0.3)
 
     prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"]) # langchain function PromptTemplate()
-    def get_conversational_chain():
+def get_conversational_chain():
 
     prompt_template = """
     Answer the question as detailed as possible from the provided context.
-    If the answer is not in the provided context, say:
+    If the answer is not in the context, say:
     "answer is not available in the context"
 
     Context:
