@@ -1,8 +1,3 @@
-Here’s a **clean, professional README.md tailored exactly to YOUR project** (Gemini + FAISS + PDF chatbot + Streamlit Cloud). You can copy-paste this directly into your repo.
-
----
-
-```markdown
 [![Streamlit](https://img.shields.io/badge/Framework-Streamlit-FF4B4B)](https://streamlit.io/)
 ![Language](https://img.shields.io/badge/Language-Python-79FFB2)
 [![Model](https://img.shields.io/badge/Model-Gemini%202.5%20Flash-FF8C00)](https://ai.google.dev/)
@@ -157,35 +152,9 @@ streamlit run app.py
 * Add support for more file types (DOCX, TXT)
 
 ---
-
-# 👩‍💻 Author
-
-**Shifa Zahra**
-Final Year Project – AI PDF Chatbot
-
----
-
-# ⭐ If you like this project
-
-Give it a star ⭐ on GitHub and feel free to contribute!
-
-```
-
----
-
-# 🎯 What I did for you
-- Replaced Groq/Llama → **Gemini (your actual model)**  
-- Updated architecture → **your exact RAG pipeline**  
-- Added **your live Streamlit link**  
-- Matched everything to **your real working code**  
-- Made it **interview + GitHub ready**
-
 ---
 
 If you want next:
 - 🔥 :contentReference[oaicite:0]{index=0}  
 - 🎯 :contentReference[oaicite:1]{index=1}  
 - 📊 :contentReference[oaicite:2]{index=2}  
-
-Just tell me 👍
-```
